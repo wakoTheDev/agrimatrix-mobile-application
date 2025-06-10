@@ -4,9 +4,14 @@ import 'sign_up_screen.dart';
 import '../services/auth_service.dart';
 import 'main_navigation_screen.dart';
 
-class AuthSelectionScreen extends StatelessWidget {
+class AuthSelectionScreen extends StatefulWidget {
   const AuthSelectionScreen({super.key});
 
+  @override
+  State<AuthSelectionScreen> createState() => _AuthSelectionScreenState();
+}
+
+class _AuthSelectionScreenState extends State<AuthSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,18 +60,23 @@ class AuthSelectionScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),              TextButton(
                 onPressed: () async {
+                  final navigator = Navigator.of(context);
+                  final scaffoldMessenger = ScaffoldMessenger.of(context);
+                  
                   try {
-                    final mounted = context.mounted;
                     await AuthService().signInAnonymously();
-                    if (mounted) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
-                        (route) => false,
-                      );
-                    }
+                    if (!mounted) return;
+                    
+                    navigator.pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
+                      (route) => false,
+                    );
                   } catch (e) {
-                    debugPrint('Error during anonymous sign in: $e');
+                    if (!mounted) return;
+                    
+                    scaffoldMessenger.showSnackBar(
+                      SnackBar(content: Text('Error signing in: ${e.toString()}')),
+                    );
                   }
                 },
                 child: const Text('Continue as Guest'),
