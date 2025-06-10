@@ -66,7 +66,6 @@ jobs:
           file: coverage/lcov.info
           flags: unittests
           fail_ci_if_error: true
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -75,7 +74,8 @@ jobs:
     
     steps:
       - uses: actions/checkout@v3
-        - name: Setup Node.js
+      
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
