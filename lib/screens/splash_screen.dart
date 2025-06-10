@@ -13,12 +13,21 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     // Navigate to onboarding screen after 3 seconds
-    Future.delayed(const Duration(seconds: 3), () {
+    _navigateToOnboarding();
+  }
+
+  Future<void> _navigateToOnboarding() async {
+    await Future.delayed(const Duration(seconds: 3));
+    
+    // Check if the widget is still mounted before using context
+    if (!mounted) return;
+    
+    if (context.mounted) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const OnboardingScreen()),
       );
-    });
+    }
   }
 
   @override
