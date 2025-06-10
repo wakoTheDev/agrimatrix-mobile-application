@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1066615764983",
+    "project_id": "agrimatrix-project",
+    "storage_bucket": "agrimatrix-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066615764983:android:9e5ce2c7aee05d9803a0f2",
+        "android_client_info": {
+          "package_name": "com.example.agrimatrix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfJBFW9vRXhB6P0c5HXef2xLWmW_pdCns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
