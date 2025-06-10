@@ -48,12 +48,12 @@ jobs:
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-      
-    - name: Upload APK
-      uses: actions/upload-artifact@v3
+        - name: Upload APK
+      uses: actions/upload-artifact@v4
       with:
         name: release-apk
         path: build/app/outputs/flutter-apk/app-release.apk
+        retention-days: 5
         
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v3
@@ -77,11 +77,11 @@ jobs:
         
     - name: Install Firebase CLI
       run: npm install -g firebase-tools
-      
-    - name: Download APK
-      uses: actions/download-artifact@v3
+        - name: Download APK
+      uses: actions/download-artifact@v4
       with:
         name: release-apk
+        path: build/app/outputs/flutter-apk
         
     - name: Deploy to Firebase
       run: |
