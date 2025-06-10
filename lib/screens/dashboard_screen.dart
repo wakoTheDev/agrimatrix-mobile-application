@@ -52,7 +52,7 @@ class DashboardScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2B5320).withOpacity(0.1),
+                  color: const Color(0xFF2B5320).withAlpha(26),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(

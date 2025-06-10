@@ -53,15 +53,21 @@ class AuthSelectionScreen extends StatelessWidget {
                 ),
                 child: const Text('Sign In'),
               ),
-              const SizedBox(height: 16),
-              TextButton(
+              const SizedBox(height: 16),              TextButton(
                 onPressed: () async {
-                  await AuthService().signInAnonymously();
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
-                    (route) => false,
-                  );
+                  try {
+                    final mounted = context.mounted;
+                    await AuthService().signInAnonymously();
+                    if (mounted) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
+                        (route) => false,
+                      );
+                    }
+                  } catch (e) {
+                    debugPrint('Error during anonymous sign in: $e');
+                  }
                 },
                 child: const Text('Continue as Guest'),
               ),

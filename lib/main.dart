@@ -2,6 +2,7 @@ import 'package:agrimatrix/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'screens/splash_screen.dart';
 import 'screens/sign_in_screen.dart';
 
@@ -12,19 +13,19 @@ void main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    print('Firebase initialized successfully');
+    debugPrint('Firebase initialized successfully');
     
     // Verify Firebase Auth is working
     final auth = FirebaseAuth.instance;
-    print('Firebase Auth instance created: ${auth.toString()}');
+    debugPrint('Firebase Auth instance created: ${auth.toString()}');
     
     // Test if we can access Firebase Auth features
     final apps = Firebase.apps;
-    print('Registered Firebase apps: ${apps.length}');
+    debugPrint('Registered Firebase apps: ${apps.length}');
     
   } catch (e, stackTrace) {
-    print('Error initializing Firebase: $e');
-    print('Stack trace: $stackTrace');
+    debugPrint('Error initializing Firebase: $e');
+    debugPrint('Stack trace: $stackTrace');
   }
   
   runApp(const MyApp());
