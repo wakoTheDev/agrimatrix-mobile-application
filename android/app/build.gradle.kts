@@ -33,11 +33,27 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        create("release") {
+            if (System.getenv("CI")) { // Used for GitHub Actions
+                storeFile = file("../app/keystore/release.jks")
+                storePassword = System.getenv("STORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            } else { // Used for local development
+                storeFile = file("keystore/agrimatrix.jks")
+                storePassword = project.findProperty("STORE_PASSWORD") as String? ?: "your_store_password"
+                keyAlias = project.findProperty("KEY_ALIAS") as String? ?: "agrimatrix"
+                keyPassword = project.findProperty("KEY_PASSWORD") as String? ?: "your_key_password"
+            }
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 }
