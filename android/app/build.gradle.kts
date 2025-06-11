@@ -2,6 +2,7 @@ import java.io.FileInputStream
 import java.util.Properties
 import java.io.File
 import java.util.Base64
+import java.security.KeyStore
 
 plugins {
     id("com.android.application")
@@ -112,8 +113,8 @@ android {
                         
                         // Validate keystore can be loaded
                         try {
-                            val keyStore = java.security.KeyStore.getInstance("JKS")
-                            java.io.FileInputStream(tempKeystoreFile).use { fis ->
+                            val keyStore = KeyStore.getInstance("JKS")
+                            FileInputStream(tempKeystoreFile).use { fis ->
                                 keyStore.load(fis, storePass?.toCharArray())
                             }
                             println("Keystore validation successful")
