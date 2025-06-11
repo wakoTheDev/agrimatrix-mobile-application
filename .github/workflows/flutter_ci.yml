@@ -23,12 +23,6 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
       
-      - name: Setup Keystore
-        run: |
-          mkdir -p android/app/keystore
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore/release.jks
-        shell: bash
-      
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -48,6 +42,7 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
         env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}  # This is what your Gradle script looks for
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
