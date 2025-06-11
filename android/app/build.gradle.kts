@@ -52,6 +52,16 @@ fun getSigningProperty(key: String, envKey: String? = null): String? {
         ?: System.getProperty(key)
 }
 
+// Check if we have all required signing properties
+fun hasValidSigningConfig(): Boolean {
+    val storeFilePath = getSigningProperty("storeFile", "KEYSTORE_BASE64")
+    val storePass = getSigningProperty("storePassword", "STORE_PASSWORD") 
+    val alias = getSigningProperty("keyAlias", "KEY_ALIAS")
+    val keyPass = getSigningProperty("keyPassword", "KEY_PASSWORD")
+    
+    return storeFilePath != null && storePass != null && alias != null && keyPass != null
+}
+
 android {
     namespace = "com.example.agrimatrix"
     compileSdk = flutter.compileSdkVersion
@@ -78,56 +88,83 @@ android {
     }
 
     signingConfigs {
-        create("release") {
-            val storeFilePath = getSigningProperty("storeFile", "KEYSTORE_BASE64")
-            val storePass = getSigningProperty("storePassword", "STORE_PASSWORD") 
-            val alias = getSigningProperty("keyAlias", "KEY_ALIAS")
-            val keyPass = getSigningProperty("keyPassword", "KEY_PASSWORD")
-            
-            // Handle base64 encoded keystore for CI/CD
-            val keystoreFile = if (System.getenv("KEYSTORE_BASE64") != null) {
-                // Decode base64 keystore and save to temp file
-                val decodedKeystore = Base64.getDecoder().decode(System.getenv("KEYSTORE_BASE64"))
-                val tempKeystoreFile = File.createTempFile("keystore", ".jks")
-                tempKeystoreFile.writeBytes(decodedKeystore)
-                tempKeystoreFile
-            } else {
-                storeFilePath?.let { file(it) }
-            }
-            
-            // Only configure if all required properties are available
-            if (keystoreFile != null && storePass != null && alias != null && keyPass != null) {
-                storeFile = keystoreFile
-                storePassword = storePass
-                keyAlias = alias
-                keyPassword = keyPass
-                println("Release signing configuration loaded successfully")
-                println("Source: ${if (System.getenv("KEYSTORE_BASE64") != null) "GitHub Secrets/Environment Variables" else "Properties File"}")
-            } else {
-                println("Missing required signing properties. Release build will use debug keystore.")
-                println("Available sources:")
-                println("  - key.properties file (any of: root, android/, secrets/, ~/.android/)")
-                println("  - Environment variables: KEYSTORE_BASE64, STORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD")
-                println("  - System properties: -DstoreFile, -DstorePassword, -DkeyAlias, -DkeyPassword")
-                println("")
-                println("Missing properties:")
-                if (keystoreFile == null) println("  - storeFile/KEYSTORE_BASE64")
-                if (storePass == null) println("  - storePassword/STORE_PASSWORD") 
-                if (alias == null) println("  - keyAlias/KEY_ALIAS")
-                if (keyPass == null) println("  - keyPassword/KEY_PASSWORD")
+        // Only create release signing config if we have valid properties
+        if (hasValidSigningConfig()) {
+            create("release") {
+                val storeFilePath = getSigningProperty("storeFile", "KEYSTORE_BASE64")
+                val storePass = getSigningProperty("storePassword", "STORE_PASSWORD") 
+                val alias = getSigningProperty("keyAlias", "KEY_ALIAS")
+                val keyPass = getSigningProperty("keyPassword", "KEY_PASSWORD")
                 
-                // Don't configure release signing - let it fall back to debug
-                enableV1Signing = true
-                enableV2Signing = true
+                // Handle base64 encoded keystore for CI/CD
+                val keystoreFile = if (System.getenv("KEYSTORE_BASE64") != null) {
+                    try {
+                        // Clean the base64 string (remove any whitespace/newlines)
+                        val cleanBase64 = System.getenv("KEYSTORE_BASE64").replace("\\s".toRegex(), "")
+                        println("Base64 keystore length: ${cleanBase64.length}")
+                        
+                        // Decode base64 keystore and save to temp file
+                        val decodedKeystore = Base64.getDecoder().decode(cleanBase64)
+                        val tempKeystoreFile = File.createTempFile("keystore", ".jks")
+                        tempKeystoreFile.writeBytes(decodedKeystore)
+                        println("Successfully created temporary keystore file: ${tempKeystoreFile.absolutePath}")
+                        println("Keystore file size: ${tempKeystoreFile.length()} bytes")
+                        
+                        // Validate keystore can be loaded
+                        try {
+                            val keyStore = java.security.KeyStore.getInstance("JKS")
+                            java.io.FileInputStream(tempKeystoreFile).use { fis ->
+                                keyStore.load(fis, storePass?.toCharArray())
+                            }
+                            println("Keystore validation successful")
+                        } catch (e: Exception) {
+                            println("Keystore validation failed: ${e.message}")
+                            throw e
+                        }
+                        
+                        tempKeystoreFile
+                    } catch (e: Exception) {
+                        println("Failed to decode base64 keystore: ${e.message}")
+                        null
+                    }
+                } else {
+                    storeFilePath?.let { file(it) }
+                }
+                
+                if (keystoreFile != null) {
+                    storeFile = keystoreFile
+                    storePassword = storePass!!
+                    keyAlias = alias!!
+                    keyPassword = keyPass!!
+                    println("Release signing configuration loaded successfully")
+                    println("Source: ${if (System.getenv("KEYSTORE_BASE64") != null) "GitHub Secrets/Environment Variables" else "Properties File"}")
+                } else {
+                    throw RuntimeException("Failed to load keystore file")
+                }
             }
+        } else {
+            println("Missing required signing properties. Release build will use debug keystore.")
+            println("Available sources:")
+            println("  - key.properties file (any of: root, android/, secrets/, ~/.android/)")
+            println("  - Environment variables: KEYSTORE_BASE64, STORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD")
+            println("  - System properties: -DstoreFile, -DstorePassword, -DkeyAlias, -DkeyPassword")
+            println("")
+            println("Missing properties:")
+            if (getSigningProperty("storeFile", "KEYSTORE_BASE64") == null) println("  - storeFile/KEYSTORE_BASE64")
+            if (getSigningProperty("storePassword", "STORE_PASSWORD") == null) println("  - storePassword/STORE_PASSWORD") 
+            if (getSigningProperty("keyAlias", "KEY_ALIAS") == null) println("  - keyAlias/KEY_ALIAS")
+            if (getSigningProperty("keyPassword", "KEY_PASSWORD") == null) println("  - keyPassword/KEY_PASSWORD")
         }
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("release")
+            // Only use release signing config if it exists, otherwise fall back to debug
+            signingConfig = if (hasValidSigningConfig()) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
         }
     }
 }
