@@ -54,13 +54,13 @@ jobs:
           path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 5
       
-      - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: coverage/lcov.info
-          flags: unittests
-          fail_ci_if_error: true
+      # - name: Upload Coverage to Codecov
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     file: coverage/lcov.info
+      #     flags: unittests
+      #     fail_ci_if_error: true
 
       - name: Upload coverage to Coveralls
         uses: coverallsapp/github-action@v2
