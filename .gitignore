@@ -49,3 +49,9 @@ app.*.map.json
 *.keystore
 keystore_base64.txt
 key.properties
+
+# env files
+**/*/\.env
+.env
+.env.*
+\.env\.*
