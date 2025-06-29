@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../services/auth_service.dart';
 import 'sign_in_screen.dart';
 import 'user_profile_screen.dart';
+import 'finance_and_logistics.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -36,6 +37,7 @@ class DashboardScreen extends StatelessWidget {
     required String subtitle,
     required IconData icon,
     required BuildContext context,
+    VoidCallback? onTap,
   }) {
     return Card(
       elevation: 2,
@@ -44,7 +46,7 @@ class DashboardScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: InkWell(
-        onTap: () => _showDetails(context, title),
+        onTap: onTap ?? () => _showDetails(context, title),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
@@ -90,10 +92,13 @@ class DashboardScreen extends StatelessWidget {
               ),
             ],
           ),
+          ),
         ),
-      ),
-    );
+
+      );
+  
   }
+
 
   void _showDetails(BuildContext context, String title) {
     showModalBottomSheet(
@@ -219,22 +224,41 @@ class DashboardScreen extends StatelessWidget {
                   children: [
                     _buildDashboardCard(
                       context: context,
-                      title: 'Crop Management',
-                      subtitle: 'Track and manage your crops',
-                      icon: Icons.grass,
-                    ),
-                    _buildDashboardCard(
-                      context: context,
                       title: 'Market Analysis', 
                       subtitle: 'Check market prices and trends',
                       icon: Icons.trending_up,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const MarketAnalysisScreen()),
+                      ),
                     ),
                     _buildDashboardCard(
                       context: context,
-                      title: 'Weather Updates',
-                      subtitle: 'Get local weather forecasts',
+                      title: 'Financial Services',
+                      subtitle: 'Access loans and insurance',
+                      icon: Icons.account_balance,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const FinancialServicesScreen()),
+                      ),
+                    ),
+                    _buildDashboardCard(
+                      context: context,
+                      title: 'Support & Advice',
+                      subtitle: 'Consult with agricultural experts',
+                      icon: Icons.support_agent,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const SupportAdviceScreen()),
+                      ),
+                    ),
+                    _buildDashboardCard(
+                      context: context,
+                      title: 'Advanced Analytics',
+                      subtitle: 'Get insights on your farm',
                       icon: Icons.wb_sunny,
                     ),
+                    
                   ],
                 ),
               ),

@@ -68,7 +68,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.eco_outlined),
-              label: 'Crops',
+              label: 'Support',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),
