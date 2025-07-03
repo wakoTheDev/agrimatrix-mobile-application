@@ -4,48 +4,61 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/splash_screen.dart';
 import 'screens/sign_in_screen.dart';
+import 'widgets/communication_wrapper.dart';
+import 'services/logging_service.dart';
 
 void main() async {
+  // Initialize Flutter binding
   WidgetsFlutterBinding.ensureInitialized();
-
+  
+  // Initialize Firebase with proper error handling
+  bool firebaseInitialized = false;
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    debugPrint('Firebase initialized successfully');
+    LoggingService.info('Firebase initialized successfully', 'Main');
     
     // Verify Firebase Auth is working
     final auth = FirebaseAuth.instance;
-    debugPrint('Firebase Auth instance created: ${auth.toString()}');
+    LoggingService.debug('Firebase Auth instance created: ${auth.toString()}', 'Main');
     
     // Test if we can access Firebase Auth features
     final apps = Firebase.apps;
-    debugPrint('Registered Firebase apps: ${apps.length}');
+    LoggingService.info('Registered Firebase apps: ${apps.length}', 'Main');
     
+    firebaseInitialized = true;
   } catch (e, stackTrace) {
-    debugPrint('Error initializing Firebase: $e');
-    debugPrint('Stack trace: $stackTrace');
+    LoggingService.error('Error initializing Firebase', e, stackTrace, 'Main');
+    LoggingService.warning('Continuing without Firebase features', 'Main');
+    // Continue with app initialization even if Firebase fails
   }
   
-  runApp(const MyApp());
+  // Run the app after initialization attempts
+  runApp(MyApp(firebaseInitialized: firebaseInitialized));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool firebaseInitialized;
+  
+  const MyApp({super.key, required this.firebaseInitialized});
 
   @override
-  Widget build(BuildContext context) {    return MaterialApp(
-      title: 'AgriMatrix',
-      theme: ThemeData(
-        primaryColor: const Color(0xFF2B5320),
-        useMaterial3: true,
+  Widget build(BuildContext context) {    
+    return CommunicationWrapper(
+      child: MaterialApp(
+        title: 'AgriMatrix',
+        theme: ThemeData(
+          primaryColor: const Color(0xFF2B5320),
+          useMaterial3: true,
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => SplashScreen(firebaseInitialized: firebaseInitialized),
+          '/signin': (context) => const SignInScreen(),
+        },
+        debugShowCheckedModeBanner: false,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashScreen(),
-        '/signin': (context) => const SignInScreen(),
-      },
-      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -106,7 +106,7 @@ Widget build(BuildContext context) {
                   onSelected: (selected) {
                     setState(() => _selectedConsultationType = type);
                   },
-                  selectedColor: const Color(0xFF2B5320).withOpacity(0.2),
+                  selectedColor: const Color(0xFF2B5320).withValues(alpha: 0.2),
                   checkmarkColor: const Color(0xFF2B5320),
                 );
               }).toList(),
@@ -167,7 +167,7 @@ Widget build(BuildContext context) {
                   onSelected: (selected) {
                     setState(() => _selectedTime = time);
                   },
-                  selectedColor: const Color(0xFF2B5320).withOpacity(0.2),
+                  selectedColor: const Color(0xFF2B5320).withValues(alpha: 0.2),
                   checkmarkColor: const Color(0xFF2B5320),
                 );
               }).toList(),

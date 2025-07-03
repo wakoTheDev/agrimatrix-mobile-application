@@ -120,7 +120,7 @@ class _QAForumTabState extends State<QAForumTab> {
                   onSelected: (selected) {
                     setState(() => _selectedCategory = category);
                   },
-                  selectedColor: const Color(0xFF2B5320).withOpacity(0.2),
+                  selectedColor: const Color(0xFF2B5320).withValues (alpha: 0.2),
                   checkmarkColor: const Color(0xFF2B5320),
                 ),
               );
@@ -180,7 +180,7 @@ class _QAForumTabState extends State<QAForumTab> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             blurRadius: 4,
             spreadRadius: 0,
             offset: const Offset(0, 2),
@@ -198,7 +198,7 @@ class _QAForumTabState extends State<QAForumTab> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF2B5320).withOpacity(0.1),
+                    color: const Color(0xFF2B5320).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -215,7 +215,7 @@ class _QAForumTabState extends State<QAForumTab> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.1),
+                      color: Colors.green.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(

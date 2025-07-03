@@ -5,6 +5,8 @@ import '../services/auth_service.dart';
 import 'sign_in_screen.dart';
 import 'user_profile_screen.dart';
 import 'finance_and_logistics.dart';
+import 'market_matrix_screen.dart';
+import 'expert_advice_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -229,7 +231,7 @@ class DashboardScreen extends StatelessWidget {
                       icon: Icons.trending_up,
                       onTap: () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const MarketAnalysisScreen()),
+                        MaterialPageRoute(builder: (_) => const MarketMatrixScreen()),
                       ),
                     ),
                     _buildDashboardCard(
@@ -249,7 +251,7 @@ class DashboardScreen extends StatelessWidget {
                       icon: Icons.support_agent,
                       onTap: () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const SupportAdviceScreen()),
+                        MaterialPageRoute(builder: (_) => const ExpertAdviceScreen()),
                       ),
                     ),
                     _buildDashboardCard(

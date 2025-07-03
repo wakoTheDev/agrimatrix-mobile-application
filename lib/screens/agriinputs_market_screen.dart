@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 // Main Screen
 class AgriInputsMarketScreen extends StatefulWidget {
+  const AgriInputsMarketScreen({super.key});
+
   @override
   _AgriInputsMarketScreenState createState() => _AgriInputsMarketScreenState();
 }
@@ -12,7 +14,7 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
   String _selectedPriceRange = 'All';
   String _selectedDeliveryOption = 'All';
   List<Product> _filteredProducts = [];
-  List<Product> _cartItems = [];
+  final List<Product> _cartItems = [];
 
   @override
   void initState() {
@@ -60,28 +62,28 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('AgriInputs Market'),
+        title: const Text('AgriInputs Market'),
         backgroundColor: Colors.green[700],
         foregroundColor: Colors.white,
         actions: [
           IconButton(
             icon: Stack(
               children: [
-                Icon(Icons.shopping_cart),
+                const Icon(Icons.shopping_cart),
                 if (_cartItems.isNotEmpty)
                   Positioned(
                     right: 0,
                     top: 0,
                     child: Container(
-                      padding: EdgeInsets.all(2),
+                      padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      constraints: BoxConstraints(minWidth: 16, minHeight: 16),
+                      constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
                       child: Text(
                         '${_cartItems.length}',
-                        style: TextStyle(color: Colors.white, fontSize: 12),
+                        style: const TextStyle(color: Colors.white, fontSize: 12),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -103,13 +105,13 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
         children: [
           // Search Bar
           Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             color: Colors.grey[100],
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Search products, brands, suppliers...',
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -123,7 +125,7 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
           // Filters
           Container(
             height: 60,
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
                 Expanded(
@@ -139,7 +141,7 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
                     },
                   ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Expanded(
                   child: _buildFilterDropdown(
                     'Price',
@@ -153,7 +155,7 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
                     },
                   ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Expanded(
                   child: _buildFilterDropdown(
                     'Delivery',
@@ -176,7 +178,7 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
             height: 80,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
                 _buildQuickActionCard('Promotions', Icons.local_offer, Colors.orange),
                 _buildQuickActionCard('Bulk Orders', Icons.inventory, Colors.blue),
@@ -189,7 +191,7 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
           // Products Grid
           Expanded(
             child: _filteredProducts.isEmpty
-                ? Center(
+                ? const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -200,8 +202,8 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
                     ),
                   )
                 : GridView.builder(
-                    padding: EdgeInsets.all(16),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    padding: const EdgeInsets.all(16),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: 0.75,
                       crossAxisSpacing: 10,
@@ -231,7 +233,7 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
 
   Widget _buildFilterDropdown(String label, String value, List<String> items, Function(String?) onChanged) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey[300]!),
         borderRadius: BorderRadius.circular(8),
@@ -243,7 +245,7 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
           items: items.map((String item) {
             return DropdownMenuItem<String>(
               value: item,
-              child: Text(item, style: TextStyle(fontSize: 12)),
+              child: Text(item, style: const TextStyle(fontSize: 12)),
             );
           }).toList(),
           onChanged: onChanged,
@@ -255,23 +257,23 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
   Widget _buildQuickActionCard(String title, IconData icon, Color color) {
     return Container(
       width: 100,
-      margin: EdgeInsets.only(right: 12),
+      margin: const EdgeInsets.only(right: 12),
       child: Card(
         child: InkWell(
           onTap: () {
             // Handle quick action tap
             switch (title) {
               case 'Promotions':
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PromotionsScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PromotionsScreen()));
                 break;
               case 'Bulk Orders':
-                Navigator.push(context, MaterialPageRoute(builder: (context) => BulkOrderScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const BulkOrderScreen()));
                 break;
               case 'Get Quote':
-                Navigator.push(context, MaterialPageRoute(builder: (context) => QuoteRequestScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const QuoteRequestScreen()));
                 break;
               case 'Suppliers':
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SuppliersScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const SuppliersScreen()));
                 break;
             }
           },
@@ -279,8 +281,8 @@ class _AgriInputsMarketScreenState extends State<AgriInputsMarketScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, color: color, size: 28),
-              SizedBox(height: 4),
-              Text(title, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              Text(title, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
             ],
           ),
         ),
@@ -295,7 +297,7 @@ class ProductCard extends StatelessWidget {
   final VoidCallback onAddToCart;
   final VoidCallback onTap;
 
-  ProductCard({required this.product, required this.onAddToCart, required this.onTap});
+  const ProductCard({super.key, required this.product, required this.onAddToCart, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -312,37 +314,37 @@ class ProductCard extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
                 ),
                 child: product.imageUrl != null
                     ? Image.network(product.imageUrl!, fit: BoxFit.cover)
-                    : Icon(Icons.image, size: 48, color: Colors.grey),
+                    : const Icon(Icons.image, size: 48, color: Colors.grey),
               ),
             ),
             Expanded(
               flex: 2,
               child: Padding(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       product.name,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
                       'KES ${product.price.toStringAsFixed(0)}',
                       style: TextStyle(color: Colors.green[700], fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Row(
                       children: [
-                        Icon(Icons.star, color: Colors.amber, size: 12),
+                        const Icon(Icons.star, color: Colors.amber, size: 12),
                         Text('${product.rating}', style: TextStyle(fontSize: 10)),
-                        Spacer(),
+                        const Spacer(),
                         Text(
                           product.inStock ? 'In Stock' : 'Out of Stock',
                           style: TextStyle(
@@ -357,7 +359,7 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               child: SizedBox(
                 width: double.infinity,
                 height: 28,
@@ -368,7 +370,7 @@ class ProductCard extends StatelessWidget {
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.zero,
                   ),
-                  child: Text('Add to Cart', style: TextStyle(fontSize: 10)),
+                  child: const Text('Add to Cart', style: TextStyle(fontSize: 10)),
                 ),
               ),
             ),
@@ -383,7 +385,7 @@ class ProductCard extends StatelessWidget {
 class ProductDetailScreen extends StatefulWidget {
   final Product product;
 
-  ProductDetailScreen({required this.product});
+  const ProductDetailScreen({super.key, required this.product});
 
   @override
   _ProductDetailScreenState createState() => _ProductDetailScreenState();
@@ -411,27 +413,27 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               decoration: BoxDecoration(color: Colors.grey[200]),
               child: widget.product.imageUrl != null
                   ? Image.network(widget.product.imageUrl!, fit: BoxFit.cover)
-                  : Icon(Icons.image, size: 100, color: Colors.grey),
+                  : const Icon(Icons.image, size: 100, color: Colors.grey),
             ),
             
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Product Name and Price
                   Text(
                     widget.product.name,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     'KES ${widget.product.price.toStringAsFixed(2)}',
                     style: TextStyle(fontSize: 28, color: Colors.green[700], fontWeight: FontWeight.bold),
                   ),
                   
                   // Rating and Stock Status
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Row(
                     children: [
                       Row(
@@ -443,11 +445,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           );
                         }),
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text('${widget.product.rating}/5'),
-                      Spacer(),
+                      const Spacer(),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                         decoration: BoxDecoration(
                           color: widget.product.inStock ? Colors.green[100] : Colors.red[100],
                           borderRadius: BorderRadius.circular(12),
@@ -464,29 +466,29 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   
                   // Supplier Info
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Card(
                     child: Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Supplier Information', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 8),
+                          const Text('Supplier Information', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 8),
                           Row(
                             children: [
                               Icon(Icons.store, color: Colors.green[700]),
-                              SizedBox(width: 8),
+                              const SizedBox(width: 8),
                               Text(widget.product.supplier),
-                              Spacer(),
+                              const Spacer(),
                               if (widget.product.isVerified)
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                   decoration: BoxDecoration(
                                     color: Colors.blue[100],
                                     borderRadius: BorderRadius.circular(8),
                                   ),
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Icon(Icons.verified, color: Colors.blue, size: 16),
@@ -497,11 +499,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 ),
                             ],
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Row(
                             children: [
                               Icon(Icons.location_on, color: Colors.grey[600], size: 16),
-                              SizedBox(width: 8),
+                              const SizedBox(width: 8),
                               Text(widget.product.location, style: TextStyle(color: Colors.grey[600])),
                             ],
                           ),
@@ -511,15 +513,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   
                   // Description
-                  SizedBox(height: 20),
-                  Text('Description', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 20),
+                  const Text('Description', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
                   Text(widget.product.description),
                   
                   // Delivery Options
-                  SizedBox(height: 20),
-                  Text('Delivery Options', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 20),
+                  const Text('Delivery Options', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
                     children: widget.product.deliveryOptions.map((option) {
@@ -532,11 +534,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   
                   // Quantity Selector
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
-                      Text('Quantity:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                      SizedBox(width: 16),
+                      const Text('Quantity:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: 16),
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey[300]!),
@@ -547,12 +549,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           children: [
                             IconButton(
                               onPressed: _quantity > 1 ? () => setState(() => _quantity--) : null,
-                              icon: Icon(Icons.remove),
+                              icon: const Icon(Icons.remove),
                             ),
                             Text('$_quantity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                             IconButton(
                               onPressed: () => setState(() => _quantity++),
-                              icon: Icon(Icons.add),
+                              icon: const Icon(Icons.add),
                             ),
                           ],
                         ),
@@ -561,9 +563,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   
                   // Reviews Section
-                  SizedBox(height: 20),
-                  Text('Reviews', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 20),
+                  const Text('Reviews', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
                   ...widget.product.reviews.map((review) => ReviewCard(review: review)).toList(),
                 ],
               ),
@@ -572,7 +574,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Row(
           children: [
             Expanded(
@@ -586,12 +588,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green[700],
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: Text('Add to Cart'),
+                child: const Text('Add to Cart'),
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: ElevatedButton(
                 onPressed: widget.product.inStock ? () {
@@ -608,9 +610,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: Text('Buy Now'),
+                child: const Text('Buy Now'),
               ),
             ),
           ],
@@ -624,7 +626,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 class CartScreen extends StatefulWidget {
   final List<Product> cartItems;
 
-  CartScreen({required this.cartItems});
+  const CartScreen({super.key, required this.cartItems});
 
   @override
   _CartScreenState createState() => _CartScreenState();
@@ -656,7 +658,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shopping Cart'),
+        title: const Text('Shopping Cart'),
         backgroundColor: Colors.green[700],
         foregroundColor: Colors.white,
       ),
@@ -665,13 +667,13 @@ class _CartScreenState extends State<CartScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.shopping_cart_outlined, size: 64, color: Colors.grey),
-                  SizedBox(height: 16),
-                  Text('Your cart is empty', style: TextStyle(fontSize: 18, color: Colors.grey)),
-                  SizedBox(height: 16),
+                  const Icon(Icons.shopping_cart_outlined, size: 64, color: Colors.grey),
+                  const SizedBox(height: 16),
+                  const Text('Your cart is empty', style: TextStyle(fontSize: 18, color: Colors.grey)),
+                  const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text('Continue Shopping'),
+                    child: const Text('Continue Shopping'),
                   ),
                 ],
               ),
@@ -703,15 +705,15 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
+                        color: Colors.grey.withValues(alpha: 0.3),
                         spreadRadius: 1,
                         blurRadius: 5,
-                        offset: Offset(0, -3),
+                        offset: const Offset(0, -3),
                       ),
                     ],
                   ),
@@ -720,14 +722,14 @@ class _CartScreenState extends State<CartScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Total:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          const Text('Total:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                           Text(
                             'KES ${_totalAmount.toStringAsFixed(2)}',
                             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green[700]),
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
@@ -742,9 +744,9 @@ class _CartScreenState extends State<CartScreen> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green[700],
                             foregroundColor: Colors.white,
-                            padding: EdgeInsets.symmetric(vertical: 16),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
                           ),
-                          child: Text('Proceed to Checkout'),
+                          child: const Text('Proceed to Checkout'),
                         ),
                       ),
                     ],
@@ -758,17 +760,19 @@ class _CartScreenState extends State<CartScreen> {
 
 // Supporting Screens (Simplified implementations)
 class PromotionsScreen extends StatelessWidget {
+  const PromotionsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Promotions & Discounts'),
+        title: const Text('Promotions & Discounts'),
         backgroundColor: Colors.green[700],
         foregroundColor: Colors.white,
       ),
       body: ListView(
-        padding: EdgeInsets.all(16),
-        children: [
+        padding: const EdgeInsets.all(16),
+        children: const [
           PromotionCard(
             title: '20% Off All Seeds',
             description: 'Get 20% discount on all seed varieties',
@@ -794,61 +798,63 @@ class PromotionsScreen extends StatelessWidget {
 }
 
 class BulkOrderScreen extends StatelessWidget {
+  const BulkOrderScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bulk Orders'),
+        title: const Text('Bulk Orders'),
         backgroundColor: Colors.green[700],
         foregroundColor: Colors.white,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Request Bulk Order',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
-            TextField(
+            const SizedBox(height: 16),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Product Name',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
-            TextField(
+            const SizedBox(height: 16),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Quantity Required',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 16),
-            TextField(
+            const SizedBox(height: 16),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Additional Requirements',
                 border: OutlineInputBorder(),
               ),
               maxLines: 3,
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Bulk order request submitted')),
+                    const SnackBar(content: Text('Bulk order request submitted')),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green[700],
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: Text('Submit Request'),
+                child: const Text('Submit Request'),
               ),
             ),
           ],
@@ -859,60 +865,62 @@ class BulkOrderScreen extends StatelessWidget {
 }
 
 class QuoteRequestScreen extends StatelessWidget {
+  const QuoteRequestScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Request Quote'),
+        title: const Text('Request Quote'),
         backgroundColor: Colors.green[700],
         foregroundColor: Colors.white,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Get Custom Quote',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
-            TextField(
+            const SizedBox(height: 16),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Organization/Farm Name',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
-            TextField(
+            const SizedBox(height: 16),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Contact Email',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
-            TextField(
+            const SizedBox(height: 16),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Products & Quantities Needed',
                 border: OutlineInputBorder(),
               ),
               maxLines: 4,
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Quote request submitted')),
+                    const SnackBar(content: Text('Quote request submitted')),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green[700],
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: Text('Request Quote'),
+                child: const Text('Request Quote'),
               ),
             ),
           ],
@@ -923,16 +931,18 @@ class QuoteRequestScreen extends StatelessWidget {
 }
 
 class SuppliersScreen extends StatelessWidget {
+  const SuppliersScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Verified Suppliers'),
+        title: const Text('Verified Suppliers'),
         backgroundColor: Colors.green[700],
         foregroundColor: Colors.white,
       ),
       body: ListView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         children: sampleSuppliers.map((supplier) => SupplierCard(supplier: supplier)).toList(),
       ),
     );
@@ -942,7 +952,7 @@ class SuppliersScreen extends StatelessWidget {
 class CheckoutScreen extends StatefulWidget {
   final List<CartItem> items;
 
-  CheckoutScreen({required this.items});
+  const CheckoutScreen({super.key, required this.items});
 
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();
@@ -970,77 +980,77 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Checkout'),
+        title: const Text('Checkout'),
         backgroundColor: Colors.green[700],
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Order Summary
-            Text('Order Summary', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 16),
+            const Text('Order Summary', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
             Card(
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     ...widget.items.map((item) => Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Row(
                         children: [
                           Expanded(child: Text(item.product.name)),
                           Text('${item.quantity}x'),
-                          SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           Text('KES ${(item.product.price * item.quantity).toStringAsFixed(2)}'),
                         ],
                       ),
-                    )).toList(),
-                    Divider(),
+                    )),
+                    const Divider(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Subtotal:'),
+                        const Text('Subtotal:'),
                         Text('KES ${_subtotal.toStringAsFixed(2)}'),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Delivery:'),
+                        const Text('Delivery:'),
                         Text('KES ${_deliveryFee.toStringAsFixed(2)}'),
                       ],
                     ),
-                    Divider(),
+                    const Divider(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Total:', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text('KES ${_total.toStringAsFixed(2)}', style: TextStyle(fontWeight: FontWeight.bold)),
+                        const Text('Total:', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text('KES ${_total.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ],
                 ),
               ),
             ),
-            
-            SizedBox(height: 24),
-            
+
+            const SizedBox(height: 24),
+
             // Delivery Information
-            Text('Delivery Information', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 16),
+            const Text('Delivery Information', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
             Card(
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     Row(
                       children: [
                         Expanded(
                           child: RadioListTile<String>(
-                            title: Text('Pickup'),
+                            title: const Text('Pickup'),
                             value: 'Pickup',
                             groupValue: _selectedDeliveryMethod,
                             onChanged: (value) {
@@ -1052,7 +1062,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                         Expanded(
                           child: RadioListTile<String>(
-                            title: Text('Delivery'),
+                            title: const Text('Delivery'),
                             value: 'Delivery',
                             groupValue: _selectedDeliveryMethod,
                             onChanged: (value) {
@@ -1065,20 +1075,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ],
                     ),
                     if (_selectedDeliveryMethod == 'Delivery') ...[
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       TextField(
                         controller: _addressController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Delivery Address',
                           border: OutlineInputBorder(),
                         ),
                         maxLines: 2,
                       ),
                     ],
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     TextField(
                       controller: _phoneController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Phone Number',
                         border: OutlineInputBorder(),
                       ),
@@ -1089,18 +1099,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ),
             ),
             
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             
             // Payment Method
-            Text('Payment Method', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 16),
+            const Text('Payment Method', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
             Card(
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     RadioListTile<String>(
-                      title: Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.phone_android, color: Colors.green),
                           SizedBox(width: 8),
@@ -1116,7 +1126,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       },
                     ),
                     RadioListTile<String>(
-                      title: Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.phone_android, color: Colors.red),
                           SizedBox(width: 8),
@@ -1132,7 +1142,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       },
                     ),
                     RadioListTile<String>(
-                      title: Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.credit_card, color: Colors.blue),
                           SizedBox(width: 8),
@@ -1155,15 +1165,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: ElevatedButton(
           onPressed: () {
             // Process payment
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: Text('Order Confirmed'),
-                content: Text('Your order has been placed successfully. You will receive updates via SMS.'),
+                title: const Text('Order Confirmed'),
+                content: const Text('Your order has been placed successfully. You will receive updates via SMS.'),
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -1171,7 +1181,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
                     },
-                    child: Text('OK'),
+                    child: const Text('OK'),
                   ),
                 ],
               ),
@@ -1180,7 +1190,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.green[700],
             foregroundColor: Colors.white,
-            padding: EdgeInsets.symmetric(vertical: 16),
+            padding: const EdgeInsets.symmetric(vertical: 16),
           ),
           child: Text('Place Order - KES ${_total.toStringAsFixed(2)}'),
         ),
@@ -1195,7 +1205,8 @@ class CartItemCard extends StatelessWidget {
   final Function(int) onQuantityChanged;
   final VoidCallback onRemove;
 
-  CartItemCard({
+  const CartItemCard({
+    super.key,
     required this.cartItem,
     required this.onQuantityChanged,
     required this.onRemove,
@@ -1204,9 +1215,9 @@ class CartItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Row(
           children: [
             Container(
@@ -1218,18 +1229,18 @@ class CartItemCard extends StatelessWidget {
               ),
               child: cartItem.product.imageUrl != null
                   ? Image.network(cartItem.product.imageUrl!, fit: BoxFit.cover)
-                  : Icon(Icons.image, color: Colors.grey),
+                  : const Icon(Icons.image, color: Colors.grey),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     cartItem.product.name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     'KES ${cartItem.product.price.toStringAsFixed(2)}',
                     style: TextStyle(color: Colors.green[700]),
@@ -1244,18 +1255,18 @@ class CartItemCard extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () => onQuantityChanged(cartItem.quantity - 1),
-                      icon: Icon(Icons.remove_circle_outline),
+                      icon: const Icon(Icons.remove_circle_outline),
                     ),
                     Text('${cartItem.quantity}'),
                     IconButton(
                       onPressed: () => onQuantityChanged(cartItem.quantity + 1),
-                      icon: Icon(Icons.add_circle_outline),
+                      icon: const Icon(Icons.add_circle_outline),
                     ),
                   ],
                 ),
                 TextButton(
                   onPressed: onRemove,
-                  child: Text('Remove', style: TextStyle(color: Colors.red)),
+                  child: const Text('Remove', style: TextStyle(color: Colors.red)),
                 ),
               ],
             ),
@@ -1269,21 +1280,21 @@ class CartItemCard extends StatelessWidget {
 class ReviewCard extends StatelessWidget {
   final Review review;
 
-  ReviewCard({required this.review});
+  const ReviewCard({super.key, required this.review});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 4),
+      margin: const EdgeInsets.symmetric(vertical: 4),
       child: Padding(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Text(review.customerName, style: TextStyle(fontWeight: FontWeight.bold)),
-                Spacer(),
+                Text(review.customerName, style: const TextStyle(fontWeight: FontWeight.bold)),
+                const Spacer(),
                 Row(
                   children: List.generate(5, (index) {
                     return Icon(
@@ -1295,9 +1306,9 @@ class ReviewCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(review.comment),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
               review.date,
               style: TextStyle(color: Colors.grey[600], fontSize: 12),
@@ -1315,7 +1326,8 @@ class PromotionCard extends StatelessWidget {
   final String validUntil;
   final String discount;
 
-  PromotionCard({
+  const PromotionCard({
+    super.key,
     required this.title,
     required this.description,
     required this.validUntil,
@@ -1325,9 +1337,9 @@ class PromotionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Row(
           children: [
             Container(
@@ -1348,25 +1360,25 @@ class PromotionCard extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 4),
+                  Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 4),
                   Text(description),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     validUntil,
-                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                    style:  TextStyle(color: Colors.grey[600], fontSize: 12),
                   ),
                 ],
               ),
             ),
             ElevatedButton(
               onPressed: () {},
-              child: Text('Apply'),
+              child: const Text('Apply'),
             ),
           ],
         ),
@@ -1378,14 +1390,14 @@ class PromotionCard extends StatelessWidget {
 class SupplierCard extends StatelessWidget {
   final Supplier supplier;
 
-  SupplierCard({required this.supplier});
+  const SupplierCard({super.key, required this.supplier});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1395,7 +1407,7 @@ class SupplierCard extends StatelessWidget {
                   backgroundColor: Colors.green[100],
                   child: Icon(Icons.store, color: Colors.green[700]),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1404,19 +1416,19 @@ class SupplierCard extends StatelessWidget {
                         children: [
                           Text(
                             supplier.name,
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           if (supplier.isVerified) ...[
-                            SizedBox(width: 8),
-                            Icon(Icons.verified, color: Colors.blue, size: 20),
+                            const SizedBox(width: 8),
+                            const Icon(Icons.verified, color: Colors.blue, size: 20),
                           ],
                         ],
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Row(
                         children: [
                           Icon(Icons.location_on, size: 16, color: Colors.grey[600]),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(supplier.location, style: TextStyle(color: Colors.grey[600])),
                         ],
                       ),
@@ -1427,19 +1439,19 @@ class SupplierCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.star, color: Colors.amber, size: 16),
+                        const Icon(Icons.star, color: Colors.amber, size: 16),
                         Text('${supplier.rating}'),
                       ],
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text('${supplier.productCount} products'),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Text('Specializes in: ${supplier.specialization}'),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
@@ -1447,17 +1459,17 @@ class SupplierCard extends StatelessWidget {
                     onPressed: () {
                       // View supplier products
                     },
-                    child: Text('View Products'),
+                    child: const Text('View Products'),
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
                       // Contact supplier
                     },
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.green[700]),
-                    child: Text('Contact'),
+                    child: const Text('Contact'),
                   ),
                 ),
               ],

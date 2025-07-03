@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart';
 
 
+
 void main() {
   runApp(const AgriFinancePlannerApp());
 }
@@ -502,12 +503,12 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
             // Header
             Card(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
                     Icon(Icons.account_balance_wallet, 
                          color: Colors.green[700], size: 30),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Text(
                       'Budget Builder',
                       style: TextStyle(
@@ -520,7 +521,7 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             
             // Budget List and Form
             Expanded(
@@ -531,7 +532,7 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
                     flex: 1,
                     child: _buildBudgetsList(),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   
                   // Budget Form
                   Expanded(
@@ -550,18 +551,18 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
   Widget _buildBudgetsList() {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Existing Budgets',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
                 itemCount: _dataManager.budgets.length,
@@ -569,7 +570,7 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
                   final budget = _dataManager.budgets[index];
                   return Card(
                     elevation: 2,
-                    margin: EdgeInsets.only(bottom: 8),
+                    margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
                       title: Text(budget.name),
                       subtitle: Text(
@@ -579,11 +580,11 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.edit, color: Colors.blue),
+                            icon: const Icon(Icons.edit, color: Colors.blue),
                             onPressed: () => _editBudget(budget),
                           ),
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () => _deleteBudget(budget.id),
                           ),
                         ],
@@ -602,20 +603,20 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
   Widget _buildBudgetForm() {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Create New Budget',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               // Basic Information
               Row(
@@ -623,7 +624,7 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
                   Expanded(
                     child: TextFormField(
                       controller: _nameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Budget Name',
                         border: OutlineInputBorder(),
                       ),
@@ -635,11 +636,11 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
                       },
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: TextFormField(
                       controller: _seasonController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Season/Crop',
                         border: OutlineInputBorder(),
                       ),
@@ -653,44 +654,44 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               // Date Selection
               Row(
                 children: [
                   Expanded(
                     child: ListTile(
-                      title: Text('Start Date'),
+                      title: const Text('Start Date'),
                       subtitle: Text(DateFormat('MMM dd, yyyy').format(_startDate)),
-                      trailing: Icon(Icons.calendar_today),
+                      trailing: const Icon(Icons.calendar_today),
                       onTap: () => _selectDate(true),
                     ),
                   ),
                   Expanded(
                     child: ListTile(
-                      title: Text('End Date'),
+                      title: const Text('End Date'),
                       subtitle: Text(DateFormat('MMM dd, yyyy').format(_endDate)),
-                      trailing: Icon(Icons.calendar_today),
+                      trailing: const Icon(Icons.calendar_today),
                       onTap: () => _selectDate(false),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               // Budget Categories
-              Text(
+              const Text(
                 'Budget Categories (KES)',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
-              
+              const SizedBox(height: 8),
+
               Expanded(
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 3,
                     crossAxisSpacing: 16,
@@ -705,7 +706,7 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
                       controller: controller,
                       decoration: InputDecoration(
                         labelText: category,
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         prefixText: 'KES ',
                       ),
                       keyboardType: TextInputType.number,
@@ -716,9 +717,9 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
                   },
                 ),
               ),
-              
-              SizedBox(height: 16),
-              
+
+              const SizedBox(height: 16),
+
               // Total and Submit
               Row(
                 children: [
@@ -726,10 +727,10 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
                     child: Card(
                       color: Colors.green[50],
                       child: Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               'Total Budget',
                               style: TextStyle(
                                 fontSize: 16,
@@ -749,14 +750,14 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   ElevatedButton(
                     onPressed: _saveBudget,
-                    child: Text('Save Budget'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green[700],
-                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                     ),
+                    child: const Text('Save Budget'),
                   ),
                 ],
               ),
@@ -769,10 +770,10 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
 
   double _calculateTotal() {
     double total = 0;
-    _categoryControllers.values.forEach((controller) {
+    for (var controller in _categoryControllers.values) {
       final value = double.tryParse(controller.text) ?? 0;
       total += value;
-    });
+    }
     return total;
   }
 
@@ -780,8 +781,8 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: isStartDate ? _startDate : _endDate,
-      firstDate: DateTime.now().subtract(Duration(days: 365)),
-      lastDate: DateTime.now().add(Duration(days: 1095)),
+      firstDate: DateTime.now().subtract(const Duration(days: 365)),
+      lastDate: DateTime.now().add(const Duration(days: 1095)),
     );
     
     if (picked != null) {
@@ -819,7 +820,7 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
       _clearForm();
       
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Budget saved successfully!')),
+        const SnackBar(content: Text('Budget saved successfully!')),
       );
 
       setState(() {});
@@ -829,7 +830,9 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
   void _clearForm() {
     _nameController.clear();
     _seasonController.clear();
-    _categoryControllers.values.forEach((controller) => controller.clear());
+    for (var controller in _categoryControllers.values) {
+      controller.clear();
+    }
   }
 
   void _editBudget(Budget budget) {
@@ -851,12 +854,12 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete Budget'),
-        content: Text('Are you sure you want to delete this budget?'),
+        title: const Text('Delete Budget'),
+        content: const Text('Are you sure you want to delete this budget?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
@@ -865,11 +868,11 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
               setState(() {});
               
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Budget deleted successfully!')),
+                const SnackBar(content: Text('Budget deleted successfully!')),
               );
             },
-            child: Text('Delete'),
             style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Delete'),
           ),
         ],
       ),
@@ -879,7 +882,7 @@ class _BudgetBuilderScreenState extends State<BudgetBuilderScreen> {
 
 // Profitability Calculator Screen
 class ProfitabilityCalculatorScreen extends StatefulWidget {
-  const ProfitabilityCalculatorScreen({Key? key}) : super(key: key);
+  const ProfitabilityCalculatorScreen({super.key});
 
   @override
   _ProfitabilityCalculatorScreenState createState() => _ProfitabilityCalculatorScreenState();
@@ -919,18 +922,18 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             // Header
             Card(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
                     Icon(Icons.trending_up, 
                          color: Colors.green[700], size: 30),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Text(
                       'Profitability Calculator',
                       style: TextStyle(
@@ -943,7 +946,7 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             
             Expanded(
               child: Row(
@@ -953,7 +956,7 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                     flex: 2,
                     child: _buildInputForm(),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   
                   // Results Display
                   Expanded(
@@ -972,20 +975,20 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
   Widget _buildInputForm() {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Farm Details',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               // Crop and Acreage
               Row(
@@ -993,7 +996,7 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                   Expanded(
                     child: TextFormField(
                       controller: _cropController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Crop/Produce',
                         border: OutlineInputBorder(),
                         hintText: 'e.g., Maize, Tomatoes',
@@ -1006,11 +1009,11 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                       },
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: TextFormField(
                       controller: _acreageController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Acreage',
                         border: OutlineInputBorder(),
                         suffixText: 'acres',
@@ -1027,7 +1030,7 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               // Yield and Price
               Row(
@@ -1035,7 +1038,7 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                   Expanded(
                     child: TextFormField(
                       controller: _yieldController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Expected Yield',
                         border: OutlineInputBorder(),
                         suffixText: 'kg/acre',
@@ -1050,11 +1053,11 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                       onChanged: (value) => _calculateProfitability(),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: TextFormField(
                       controller: _priceController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Market Price',
                         border: OutlineInputBorder(),
                         prefixText: 'KES ',
@@ -1072,16 +1075,16 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                   ),
                 ],
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               
-              Text(
+              const Text(
                 'Cost Breakdown (KES)',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               // Cost inputs
               Expanded(
@@ -1092,7 +1095,7 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                         Expanded(
                           child: TextFormField(
                             controller: _inputCostController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Input Costs',
                               border: OutlineInputBorder(),
                               prefixText: 'KES ',
@@ -1102,11 +1105,11 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                             onChanged: (value) => _calculateProfitability(),
                           ),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Expanded(
                           child: TextFormField(
                             controller: _laborCostController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Labor Costs',
                               border: OutlineInputBorder(),
                               prefixText: 'KES ',
@@ -1118,13 +1121,13 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Row(
                       children: [
                         Expanded(
                           child: TextFormField(
                             controller: _transportCostController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Transport Costs',
                               border: OutlineInputBorder(),
                               prefixText: 'KES ',
@@ -1134,11 +1137,11 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                             onChanged: (value) => _calculateProfitability(),
                           ),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Expanded(
                           child: TextFormField(
                             controller: _otherCostController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Other Costs',
                               border: OutlineInputBorder(),
                               prefixText: 'KES ',
@@ -1154,17 +1157,17 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                 ),
               ),
               
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               // Calculate Button
               Center(
                 child: ElevatedButton(
                   onPressed: _calculateProfitability,
-                  child: Text('Calculate Profitability'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green[700],
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   ),
+                  child: const Text('Calculate Profitability'),
                 ),
               ),
             ],
@@ -1181,7 +1184,7 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
         Card(
           color: Colors.green[50],
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -1193,14 +1196,14 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
                     color: Colors.green[700],
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 
                 _buildResultRow('Total Revenue', _revenue, Colors.green),
                 _buildResultRow('Total Costs', _totalCosts, Colors.orange),
-                Divider(thickness: 2),
+                const Divider(thickness: 2),
                 _buildResultRow('Net Profit', _profit, 
                     _profit >= 0 ? Colors.green : Colors.red),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 
                 _buildMetricRow('ROI', '${_roi.toStringAsFixed(1)}%'),
                 _buildMetricRow('Profit Margin', '${_profitMargin.toStringAsFixed(1)}%'),
@@ -1208,42 +1211,42 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
             ),
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         
         // Recommendations Card
         Card(
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Recommendations',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 
                 ..._generateRecommendations().map((recommendation) => 
                   Padding(
-                    padding: EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.only(bottom: 8),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.lightbulb, size: 16, color: Colors.amber),
-                        SizedBox(width: 8),
+                        const Icon(Icons.lightbulb, size: 16, color: Colors.amber),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             recommendation,
-                            style: TextStyle(fontSize: 12),
+                            style: const TextStyle(fontSize: 12),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ).toList(),
+                ),
               ],
             ),
           ),
@@ -1254,11 +1257,11 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
 
   Widget _buildResultRow(String label, double value, Color color) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(fontWeight: FontWeight.w500)),
+          Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
           Text(
             'KES ${NumberFormat('#,##0').format(value)}',
             style: TextStyle(
@@ -1273,11 +1276,11 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
 
   Widget _buildMetricRow(String label, String value) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(fontWeight: FontWeight.w500)),
+          Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
           Text(
             value,
             style: TextStyle(
@@ -1334,7 +1337,7 @@ class _ProfitabilityCalculatorScreenState extends State<ProfitabilityCalculatorS
 
 // Savings Goals Screen
 class SavingsGoalsScreen extends StatefulWidget {
-  const SavingsGoalsScreen({Key? key}) : super(key: key);
+  const SavingsGoalsScreen({super.key});
 
   @override
   _SavingsGoalsScreenState createState() => _SavingsGoalsScreenState();
@@ -1348,7 +1351,7 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
   final _targetAmountController = TextEditingController();
   final _contributionController = TextEditingController();
   
-  DateTime _targetDate = DateTime.now().add(Duration(days: 365));
+  DateTime _targetDate = DateTime.now().add(const Duration(days: 365));
 
   @override
   void dispose() {
@@ -1363,18 +1366,18 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             // Header
             Card(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
                     Icon(Icons.savings, 
                          color: Colors.green[700], size: 30),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Text(
                       'Savings Goals',
                       style: TextStyle(
@@ -1387,7 +1390,7 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             
             Expanded(
               child: Row(
@@ -1397,7 +1400,7 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
                     flex: 2,
                     child: _buildGoalsList(),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   
                   // New Goal Form
                   Expanded(
@@ -1416,18 +1419,18 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
   Widget _buildGoalsList() {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Your Savings Goals',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             
             Expanded(
               child: ListView.builder(
@@ -1450,9 +1453,9 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
     
     return Card(
       elevation: 2,
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1462,7 +1465,7 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
                 Expanded(
                   child: Text(
                     goal.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -1478,7 +1481,7 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             
             Text(
               goal.description,
@@ -1487,7 +1490,7 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
                 color: Colors.grey[600],
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             
             // Progress Bar
             LinearProgressIndicator(
@@ -1497,14 +1500,14 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
                 progress >= 1.0 ? Colors.green : Colors.blue,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'KES ${NumberFormat('#,##0').format(goal.currentAmount)} / ${NumberFormat('#,##0').format(goal.targetAmount)}',
-                  style: TextStyle(fontSize: 12),
+                  style: const TextStyle(fontSize: 12),
                 ),
                 Text(
                   daysLeft > 0 ? '$daysLeft days left' : 'Overdue',
@@ -1515,18 +1518,18 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
                   onPressed: () => _addContribution(goal),
-                  child: Text('Add Money'),
+                  child: const Text('Add Money'),
                 ),
                 TextButton(
                   onPressed: () => _editGoal(goal),
-                  child: Text('Edit'),
+                  child: const Text('Edit'),
                 ),
               ],
             ),
@@ -1539,24 +1542,24 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
   Widget _buildGoalForm() {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Create New Goal',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Goal Name',
                   border: OutlineInputBorder(),
                   hintText: 'e.g., New Tractor',
@@ -1568,21 +1571,21 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Description',
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 3,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               TextFormField(
                 controller: _targetAmountController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Target Amount',
                   border: OutlineInputBorder(),
                   prefixText: 'KES ',
@@ -1595,23 +1598,23 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               ListTile(
-                title: Text('Target Date'),
+                title: const Text('Target Date'),
                 subtitle: Text(DateFormat('MMM dd, yyyy').format(_targetDate)),
-                trailing: Icon(Icons.calendar_today),
+                trailing: const Icon(Icons.calendar_today),
                 onTap: _selectTargetDate,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               
               ElevatedButton(
                 onPressed: _createGoal,
-                child: Text('Create Goal'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green[700],
-                  minimumSize: Size(double.infinity, 48),
+                  minimumSize: const Size(double.infinity, 48),
                 ),
+                child: const Text('Create Goal'),
               ),
             ],
           ),
@@ -1625,7 +1628,7 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
       context: context,
       initialDate: _targetDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 3650)), // 10 years
+      lastDate: DateTime.now().add(const Duration(days: 3650)), // 10 years
     );
     
     if (picked != null) {
@@ -1651,7 +1654,7 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
       _clearForm();
       
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Savings goal created successfully!')),
+        const SnackBar(content: Text('Savings goal created successfully!')),
       );
 
       setState(() {});
@@ -1662,22 +1665,22 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
     _nameController.clear();
     _descriptionController.clear();
     _targetAmountController.clear();
-    _targetDate = DateTime.now().add(Duration(days: 365));
+    _targetDate = DateTime.now().add(const Duration(days: 365));
   }
 
   void _addContribution(SavingsGoal goal) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Add Contribution'),
+        title: const Text('Add Contribution'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('Add money to: ${goal.name}'),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _contributionController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Amount',
                 border: OutlineInputBorder(),
                 prefixText: 'KES ',
@@ -1689,7 +1692,7 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
@@ -1702,11 +1705,11 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
                 setState(() {});
                 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Contribution added successfully!')),
+                  const SnackBar(content: Text('Contribution added successfully!')),
                 );
               }
             },
-            child: Text('Add'),
+            child: const Text('Add'),
           ),
         ],
       ),
@@ -1725,7 +1728,7 @@ class _SavingsGoalsScreenState extends State<SavingsGoalsScreen> {
 
 // Loan Repayment Screen
 class LoanRepaymentScreen extends StatefulWidget {
-  const LoanRepaymentScreen({Key? key}) : super(key: key);
+  const LoanRepaymentScreen({super.key});
 
   @override
   _LoanRepaymentScreenState createState() => _LoanRepaymentScreenState();
@@ -1738,18 +1741,18 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             // Header
             Card(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
                     Icon(Icons.payment, 
                          color: Colors.green[700], size: 30),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Text(
                       'Loan Repayment Tracker',
                       style: TextStyle(
@@ -1762,32 +1765,32 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             
             // Summary Cards
             Row(
               children: [
                 Expanded(child: _buildSummaryCard('Total Loans', _dataManager.loans.length.toString(), Icons.account_balance)),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Expanded(child: _buildSummaryCard('Total Balance', 'KES ${NumberFormat('#,##0').format(_getTotalBalance())}', Icons.money)),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Expanded(child: _buildSummaryCard('Monthly Payment', 'KES ${NumberFormat('#,##0').format(_getTotalMonthlyPayment())}', Icons.calendar_month)),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             
             // Loans List
             Expanded(
               child: Card(
                 child: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Your Loans',
                             style: TextStyle(
                               fontSize: 18,
@@ -1796,14 +1799,14 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                           ),
                           ElevatedButton(
                             onPressed: _addNewLoan,
-                            child: Text('Add Loan'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.green[700],
                             ),
+                            child: const Text('Add Loan'),
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       
                       Expanded(
                         child: ListView.builder(
@@ -1829,19 +1832,19 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
     return Card(
       color: Colors.green[50],
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Icon(icon, color: Colors.green[700], size: 24),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
               ),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
               value,
               style: TextStyle(
@@ -1863,9 +1866,9 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
 
     return Card(
       elevation: 2,
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1874,7 +1877,7 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
               children: [
                 Text(
                   loan.lenderName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -1888,15 +1891,15 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             
             // Progress Bar
             LinearProgressIndicator(
               value: progress,
               backgroundColor: Colors.grey[300],
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1910,7 +1913,7 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                     ),
                     Text(
                       'KES ${NumberFormat('#,##0').format(loan.remainingBalance)}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -1926,7 +1929,7 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                     ),
                     Text(
                       'KES ${NumberFormat('#,##0').format(loan.monthlyPayment)}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -1935,18 +1938,18 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Remaining: $remainingMonths months',
-                  style: TextStyle(fontSize: 12),
+                  style: const TextStyle(fontSize: 12),
                 ),
                 TextButton(
                   onPressed: () => _makePayment(loan),
-                  child: Text('Make Payment'),
+                  child: const Text('Make Payment'),
                 ),
               ],
             ),
@@ -1969,12 +1972,12 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Add New Loan'),
-        content: Text('Loan addition form would be implemented here'),
+        title: const Text('Add New Loan'),
+        content: const Text('Loan addition form would be implemented here'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Close'),
+            child: const Text('Close'),
           ),
         ],
       ),
@@ -1986,12 +1989,12 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Make Payment'),
-        content: Text('Payment processing would be implemented here'),
+        title: const Text('Make Payment'),
+        content: const Text('Payment processing would be implemented here'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Close'),
+            child: const Text('Close'),
           ),
         ],
       ),
@@ -2002,7 +2005,7 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
 // Cash Flow Dashboard Screen
 // Cash Flow Dashboard Screen
 class CashFlowDashboardScreen extends StatefulWidget {
-  const CashFlowDashboardScreen({Key? key}) : super(key: key);
+  const CashFlowDashboardScreen({super.key});
 
   @override
   _CashFlowDashboardScreenState createState() => _CashFlowDashboardScreenState();
@@ -2025,7 +2028,7 @@ class _CashFlowDashboardScreenState extends State<CashFlowDashboardScreen> {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             // Header
@@ -2035,12 +2038,12 @@ class _CashFlowDashboardScreenState extends State<CashFlowDashboardScreen> {
                 title: Text('Cash Flow Dashboard',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green[700])),
                 trailing: IconButton(
-                  icon: Icon(Icons.calendar_today),
+                  icon: const Icon(Icons.calendar_today),
                   onPressed: _selectMonth,
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Summary
             Row(
@@ -2051,19 +2054,19 @@ class _CashFlowDashboardScreenState extends State<CashFlowDashboardScreen> {
                 _buildStatCard('Balance', balance, balance >= 0 ? Colors.green : Colors.red),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Breakdown
             Expanded(
               child: Card(
                 child: Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Expenses by Category',
+                      const Text('Expenses by Category',
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Expanded(
                         child: ListView(
                           children: categoryBreakdown.entries.map((entry) {
@@ -2071,7 +2074,7 @@ class _CashFlowDashboardScreenState extends State<CashFlowDashboardScreen> {
                               title: Text(entry.key),
                               trailing: Text(
                                 'KES ${entry.value.toStringAsFixed(2)}',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(fontWeight: FontWeight.bold),
                               ),
                             );
                           }).toList(),
@@ -2091,13 +2094,13 @@ class _CashFlowDashboardScreenState extends State<CashFlowDashboardScreen> {
   Widget _buildStatCard(String label, double value, Color color) {
     return Expanded(
       child: Card(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         child: Padding(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           child: Column(
             children: [
-              Text(label, style: TextStyle(fontWeight: FontWeight.w500)),
-              SizedBox(height: 8),
+              Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
+              const SizedBox(height: 8),
               Text('KES ${value.toStringAsFixed(0)}',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: color)),
             ],
@@ -2127,7 +2130,7 @@ class _CashFlowDashboardScreenState extends State<CashFlowDashboardScreen> {
 
 // Financial Diary Screen
 class FinancialDiaryScreen extends StatefulWidget {
-  const FinancialDiaryScreen({Key? key}) : super(key: key);
+  const FinancialDiaryScreen({super.key});
 
   @override
   _FinancialDiaryScreenState createState() => _FinancialDiaryScreenState();
@@ -2157,7 +2160,7 @@ class _FinancialDiaryScreenState extends State<FinancialDiaryScreen> {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             // Header
@@ -2168,12 +2171,12 @@ class _FinancialDiaryScreenState extends State<FinancialDiaryScreen> {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green[700])),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // New Entry Form
             Card(
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -2185,43 +2188,43 @@ class _FinancialDiaryScreenState extends State<FinancialDiaryScreen> {
                               value: _selectedType,
                               items: ['income', 'expense'].map((e) => DropdownMenuItem(value: e, child: Text(e.capitalize()))).toList(),
                               onChanged: (value) => setState(() => _selectedType = value ?? 'expense'),
-                              decoration: InputDecoration(labelText: 'Type'),
+                              decoration: const InputDecoration(labelText: 'Type'),
                             ),
                           ),
-                          SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           Expanded(
                             child: DropdownButtonFormField<String>(
                               value: _selectedCategory,
                               items: _categories.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
                               onChanged: (value) => setState(() => _selectedCategory = value ?? 'General'),
-                              decoration: InputDecoration(labelText: 'Category'),
+                              decoration: const InputDecoration(labelText: 'Category'),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       TextFormField(
                         controller: _descController,
-                        decoration: InputDecoration(labelText: 'Description'),
+                        decoration: const InputDecoration(labelText: 'Description'),
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       TextFormField(
                         controller: _amountController,
-                        decoration: InputDecoration(labelText: 'Amount (KES)', prefixText: 'KES '),
+                        decoration: const InputDecoration(labelText: 'Amount (KES)', prefixText: 'KES '),
                         keyboardType: TextInputType.number,
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       ElevatedButton(
                         onPressed: _saveEntry,
-                        child: Text('Add Entry'),
                         style: ElevatedButton.styleFrom(backgroundColor: Colors.green[700]),
+                        child: const Text('Add Entry'),
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Diary List
             Expanded(
@@ -2269,7 +2272,7 @@ class _FinancialDiaryScreenState extends State<FinancialDiaryScreen> {
       _amountController.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Entry added successfully!')),
+        const SnackBar(content: Text('Entry added successfully!')),
       );
 
       setState(() {});

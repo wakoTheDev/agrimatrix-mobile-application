@@ -70,7 +70,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
                   setState(() => _selectedPaymentMethod = value!);
                 },
               );
-            }).toList(),
+            }),
 
             if (_selectedPaymentMethod != 'Card Payment') ...[
               const SizedBox(height: 16),

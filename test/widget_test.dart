@@ -3,7 +3,7 @@ import 'package:agrimatrix/main.dart';
 
 void main() {
   testWidgets('App starts without crashing', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const MyApp(firebaseInitialized: true));
 
     // Simulate the 5-second splash screen timer
     await tester.pump(const Duration(seconds: 5));

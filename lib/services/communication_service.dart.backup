@@ -1,0 +1,315 @@
+import 'dart:async';
+import 'package:flutter_webrtc/flutter_webrtc.dart' hide MessageType;
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:uuid/uuid.dart';
+import '../models/app_models.dart';
+
+class CommunicationService {
+  static final CommunicationService _instance = CommunicationService._internal();
+  factory CommunicationService() => _instance;
+  CommunicationService._internal();
+
+  late IO.Socket _socket;
+  RTCPeerConnection? _peerConnection;
+  MediaStream? _localStream;
+  MediaStream? _remoteStream;
+  
+  final StreamController<ChatMessage> _messageController = 
+      StreamController<ChatMessage>.broadcast();
+  final StreamController<CallState> _callStateController = 
+      StreamController<CallState>.broadcast();
+
+  Stream<ChatMessage> get messageStream => _messageController.stream;
+  Stream<CallState> get callStateStream => _callStateController.stream;
+
+  String? _currentUserId;
+  String? _currentCallId;
+  bool _isCallActive = false;
+
+  Future<void> initialize(String userId) async {
+    _currentUserId = userId;
+    await _initializeSocket();
+    await _setupWebRTC();
+  }
+
+  Future<void> _initializeSocket() async {
+    _socket = IO.io('wss://agrimatrix-communication.com', {
+      'transports': ['websocket'],
+      'autoConnect': true,
+    });
+
+    _socket.on('connect', (_) {
+      print('Connected to communication server');
+      _socket.emit('user_online', {'userId': _currentUserId});
+    });
+
+    _socket.on('message', (data) {
+      _handleIncomingMessage(data);
+    });
+
+    _socket.on('call_request', (data) {
+      _handleCallRequest(data);
+    });
+
+    _socket.on('call_response', (data) {
+      _handleCallResponse(data);
+    });
+
+    _socket.on('webrtc_signal', (data) {
+      _handleWebRTCSignal(data);
+    });
+
+    _socket.on('call_ended', (data) {
+      _handleCallEnded(data);
+    });
+  }
+
+  Future<void> _setupWebRTC() async {
+    final configuration = {
+      'iceServers': [
+        {'urls': 'stun:stun.l.google.com:19302'},
+        {'urls': 'stun:stun1.l.google.com:19302'},
+      ]
+    };
+
+    _peerConnection = await createPeerConnection(configuration);
+    
+    _peerConnection?.onIceCandidate = (candidate) {
+      _socket.emit('webrtc_signal', {
+        'type': 'ice_candidate',
+        'candidate': candidate.toMap(),
+        'callId': _currentCallId,
+      });
+    };
+
+    _peerConnection?.onAddStream = (stream) {
+      _remoteStream = stream;
+      _callStateController.add(CallState.connected);
+    };
+  }
+
+  // Message handling
+  void sendMessage(String receiverId, String content, MessageType type, {String? filePath}) {
+    final message = ChatMessage(
+      id: const Uuid().v4(),
+      senderId: _currentUserId!,
+      receiverId: receiverId,
+      content: content,
+      type: type,
+      timestamp: DateTime.now(),
+      filePath: filePath,
+    );
+
+    _socket.emit('send_message', {
+      'messageId': message.id,
+      'senderId': message.senderId,
+      'receiverId': message.receiverId,
+      'content': message.content,
+      'type': message.type.toString(),
+      'timestamp': message.timestamp.toIso8601String(),
+      'filePath': message.filePath,
+    });
+
+    _messageController.add(message);
+  }
+
+  void _handleIncomingMessage(dynamic data) {
+    try {
+      final messageData = Map<String, dynamic>.from(data);
+      final message = ChatMessage(
+        id: messageData['messageId'],
+        senderId: messageData['senderId'],
+        receiverId: messageData['receiverId'],
+        content: messageData['content'],
+        type: MessageType.values.firstWhere(
+          (e) => e.toString() == messageData['type'],
+          orElse: () => MessageType.text,
+        ),
+        timestamp: DateTime.parse(messageData['timestamp']),
+        filePath: messageData['filePath'],
+      );
+
+      _messageController.add(message);
+    } catch (e) {
+      print('Error handling incoming message: $e');
+    }
+  }
+
+  // Voice/Video calling
+  Future<void> startCall(String receiverId, CallType callType) async {
+    _currentCallId = const Uuid().v4();
+    _isCallActive = true;
+
+    try {
+      if (callType == CallType.video) {
+        _localStream = await navigator.mediaDevices.getUserMedia({
+          'video': true,
+          'audio': true,
+        });
+      } else {
+        _localStream = await navigator.mediaDevices.getUserMedia({
+          'video': false,
+          'audio': true,
+        });
+      }
+
+      _localStream?.getTracks().forEach((track) {
+        _peerConnection?.addTrack(track, _localStream!);
+      });
+
+      final offer = await _peerConnection?.createOffer();
+      await _peerConnection?.setLocalDescription(offer!);
+
+      _socket.emit('call_request', {
+        'callId': _currentCallId,
+        'callerId': _currentUserId,
+        'receiverId': receiverId,
+        'callType': callType.toString(),
+        'offer': offer?.toMap(),
+      });
+
+      _callStateController.add(CallState.calling);
+    } catch (e) {
+      print('Error starting call: $e');
+      _callStateController.add(CallState.error);
+    }
+  }
+
+  Future<void> acceptCall(String callId) async {
+    try {
+      _currentCallId = callId;
+      _isCallActive = true;
+
+      _localStream = await navigator.mediaDevices.getUserMedia({
+        'video': true,
+        'audio': true,
+      });
+
+      _localStream?.getTracks().forEach((track) {
+        _peerConnection?.addTrack(track, _localStream!);
+      });
+
+      _callStateController.add(CallState.connecting);
+    } catch (e) {
+      print('Error accepting call: $e');
+      _callStateController.add(CallState.error);
+    }
+  }
+
+  void rejectCall(String callId) {
+    _socket.emit('call_response', {
+      'callId': callId,
+      'response': 'rejected',
+    });
+  }
+
+  void endCall() {
+    if (_currentCallId != null) {
+      _socket.emit('call_ended', {
+        'callId': _currentCallId,
+        'userId': _currentUserId,
+      });
+    }
+    _cleanupCall();
+  }
+
+  void _handleCallRequest(dynamic data) {
+    _callStateController.add(CallState.incoming);
+    // Emit incoming call event with caller info
+  }
+
+  void _handleCallResponse(dynamic data) {
+    final response = data['response'] as String;
+    if (response == 'accepted') {
+      _callStateController.add(CallState.connecting);
+    } else {
+      _callStateController.add(CallState.rejected);
+      _cleanupCall();
+    }
+  }
+
+  void _handleWebRTCSignal(dynamic data) async {
+    try {
+      final signalData = Map<String, dynamic>.from(data);
+      final type = signalData['type'] as String;
+
+      switch (type) {
+        case 'offer':
+          final offer = RTCSessionDescription(
+            signalData['offer']['sdp'],
+            signalData['offer']['type'],
+          );
+          await _peerConnection?.setRemoteDescription(offer);
+          
+          final answer = await _peerConnection?.createAnswer();
+          await _peerConnection?.setLocalDescription(answer!);
+          
+          _socket.emit('webrtc_signal', {
+            'type': 'answer',
+            'answer': answer?.toMap(),
+            'callId': _currentCallId,
+          });
+          break;
+          
+        case 'answer':
+          final answer = RTCSessionDescription(
+            signalData['answer']['sdp'],
+            signalData['answer']['type'],
+          );
+          await _peerConnection?.setRemoteDescription(answer);
+          break;
+          
+        case 'ice_candidate':
+          final candidate = RTCIceCandidate(
+            signalData['candidate']['candidate'],
+            signalData['candidate']['sdpMid'],
+            signalData['candidate']['sdpMLineIndex'],
+          );
+          await _peerConnection?.addCandidate(candidate);
+          break;
+      }
+    } catch (e) {
+      print('Error handling WebRTC signal: $e');
+    }
+  }
+
+  void _handleCallEnded(dynamic data) {
+    _cleanupCall();
+    _callStateController.add(CallState.ended);
+  }
+
+  void _cleanupCall() {
+    _localStream?.getTracks().forEach((track) => track.stop());
+    _remoteStream?.getTracks().forEach((track) => track.stop());
+    _localStream = null;
+    _remoteStream = null;
+    _currentCallId = null;
+    _isCallActive = false;
+  }
+
+  // Getters for streams
+  MediaStream? get localStream => _localStream;
+  MediaStream? get remoteStream => _remoteStream;
+  bool get isCallActive => _isCallActive;
+
+  void dispose() {
+    _cleanupCall();
+    _peerConnection?.dispose();
+    _socket.disconnect();
+    _messageController.close();
+    _callStateController.close();
+  }
+}
+
+enum CallType { audio, video }
+
+enum CallState {
+  idle,
+  calling,
+  incoming,
+  connecting,
+  connected,
+  ended,
+  rejected,
+  error,
+}

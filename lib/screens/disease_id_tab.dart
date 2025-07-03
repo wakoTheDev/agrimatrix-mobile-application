@@ -379,9 +379,9 @@ class _ImageUploadTabState extends State<ImageUploadTab> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Text(
         text,
@@ -439,7 +439,7 @@ class _ImageUploadTabState extends State<ImageUploadTab> {
               ),
             ],
           ),
-        )).toList(),
+        )),
       ],
     );
   }
@@ -567,7 +567,7 @@ class _SymptomCheckerTabState extends State<SymptomCheckerTab> {
                               }
                             });
                           },
-                          selectedColor: const Color(0xFF2B5320).withOpacity(0.2),
+                          selectedColor: const Color(0xFF2B5320).withValues(alpha: 0.2),
                           checkmarkColor: const Color(0xFF2B5320),
                         );
                       }).toList(),

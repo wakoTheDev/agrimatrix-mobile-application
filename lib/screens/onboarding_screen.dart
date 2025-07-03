@@ -94,7 +94,10 @@ class OnboardingScreen extends StatelessWidget {
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () {
-                  // TODO: Implement sign in navigation
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AuthSelectionScreen()),
+                  );
                 },
                 child: Text(
                   'Sign In',

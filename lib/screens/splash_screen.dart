@@ -2,32 +2,74 @@ import 'package:flutter/material.dart';
 import 'onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  final bool firebaseInitialized;
+  
+  const SplashScreen({
+    super.key,
+    required this.firebaseInitialized,
+  });
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool _isLoading = true;
+  String _loadingMessage = "Loading resources...";
+  bool _showRetryButton = false;
+  
   @override
   void initState() {
     super.initState();
-    // Navigate to onboarding screen after 3 seconds
+    
+    // Show longer loading status for web or if Firebase failed to initialize
+    if (!widget.firebaseInitialized) {
+      _loadingMessage = "Loading resources (offline mode)...";
+      debugPrint('SplashScreen started in offline mode due to Firebase initialization failure');
+    }
+    
+    // Navigate to onboarding screen after appropriate delay
     _navigateToOnboarding();
   }
 
   Future<void> _navigateToOnboarding() async {
-    await Future.delayed(const Duration(seconds: 3));
-    
-    // Check if the widget is still mounted before using context
-    if (!mounted) return;
-    
-    if (context.mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
-      );
+    try {
+      // Longer delay if Firebase failed to initialize to give more time
+      final delay = !widget.firebaseInitialized ? 5 : 3;
+      await Future.delayed(Duration(seconds: delay));
+      
+      // Check if the widget is still mounted before using context
+      if (!mounted) return;
+      
+      setState(() {
+        _isLoading = false;
+      });
+      
+      if (context.mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+          _loadingMessage = "Error loading application: $e";
+          _showRetryButton = true;
+        });
+        debugPrint('Error in _navigateToOnboarding: $e');
+      }
     }
+  }
+  
+  void _retryLoading() {
+    setState(() {
+      _isLoading = true;
+      _loadingMessage = "Retrying...";
+      _showRetryButton = false;
+    });
+    _navigateToOnboarding();
   }
 
   @override
@@ -57,6 +99,31 @@ class _SplashScreenState extends State<SplashScreen> {
                 letterSpacing: 1.2,
               ),
             ),
+            const SizedBox(height: 24),
+            // Loading indicator
+            if (_isLoading)
+              const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            const SizedBox(height: 20),
+            // Loading message
+            Text(
+              _loadingMessage,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            // Retry button for error recovery
+            if (_showRetryButton)
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: ElevatedButton(
+                  onPressed: _retryLoading,
+                  child: const Text('Retry'),
+                ),
+              ),
             // Tagline
             const Text(
               'Empowering Farmers',

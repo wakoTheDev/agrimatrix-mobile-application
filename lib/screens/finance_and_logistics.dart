@@ -232,7 +232,7 @@ class FinancialServicesScreen extends StatelessWidget {
                   color: const Color(0xFF7B1FA2),
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => AgriInputsMarketScreen()),
+                    MaterialPageRoute(builder: (_) => const AgriInputsMarketScreen()),
                   ),
                 ),
                 
@@ -243,7 +243,7 @@ class FinancialServicesScreen extends StatelessWidget {
                   color: const Color(0xFFF57C00),
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => AgriFinancePlannerScreen()),
+                    MaterialPageRoute(builder: (_) => const AgriFinancePlannerScreen()),
                   ),
                 ),
                 

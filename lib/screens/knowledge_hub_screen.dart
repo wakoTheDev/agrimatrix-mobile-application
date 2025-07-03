@@ -12,9 +12,9 @@ class _KnowledgeHubScreenState extends State<KnowledgeHubScreen>
     with SingleTickerProviderStateMixin {
   late TabController _categoryTabController;
   String _searchQuery = '';
-  String _selectedCategory = 'All';
+  final String _selectedCategory = 'All';
   String _selectedContentType = 'All';
-  List<String> _bookmarkedArticles = [];
+  final List<String> _bookmarkedArticles = [];
 
   final List<String> _categories = [
     'All',
@@ -156,7 +156,7 @@ class _KnowledgeHubScreenState extends State<KnowledgeHubScreen>
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF2B5320).withOpacity(0.1),
+            color: const Color(0xFF2B5320).withValues(alpha: 0.1),
             blurRadius: 4,
             spreadRadius: 0,
             offset: const Offset(0, 2),
@@ -174,8 +174,8 @@ class _KnowledgeHubScreenState extends State<KnowledgeHubScreen>
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
               gradient: LinearGradient(
                 colors: [
-                  const Color(0xFF2B5320).withOpacity(0.8),
-                  const Color(0xFF4CAF50).withOpacity(0.6),
+                  const Color(0xFF2B5320).withValues(alpha: 0.8),
+                  const Color(0xFF4CAF50).withValues(alpha: 0.6),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -190,7 +190,7 @@ class _KnowledgeHubScreenState extends State<KnowledgeHubScreen>
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
@@ -223,7 +223,7 @@ class _KnowledgeHubScreenState extends State<KnowledgeHubScreen>
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withValues(alpha: 0.9),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -242,7 +242,7 @@ class _KnowledgeHubScreenState extends State<KnowledgeHubScreen>
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.9),
+                        color: Colors.green.withValues(alpha: 0.9),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
@@ -275,7 +275,7 @@ class _KnowledgeHubScreenState extends State<KnowledgeHubScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
+                    color: Colors.blue.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -484,7 +484,7 @@ class _KnowledgeHubScreenState extends State<KnowledgeHubScreen>
                   _selectedContentType = selected ? type : 'All';
                 });
               },
-              selectedColor: const Color(0xFF2B5320).withOpacity(0.2),
+              selectedColor: const Color(0xFF2B5320).withValues(alpha: 0.2),
               checkmarkColor: const Color(0xFF2B5320),
               labelStyle: GoogleFonts.poppins(
                 fontSize: 12,
@@ -938,7 +938,7 @@ class ContentDetailScreen extends StatelessWidget {
               children: item.tags.map((tag) => Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2B5320).withOpacity(0.1),
+                  color: const Color(0xFF2B5320).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Text(

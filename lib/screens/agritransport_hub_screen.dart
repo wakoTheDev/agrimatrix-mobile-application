@@ -353,9 +353,9 @@ class _AgriTransportHubScreenState extends State<AgriTransportHubScreen>
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Expanded(
+                    const Expanded(
                       child: TextField(
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Weight (KG)',
                           border: OutlineInputBorder(),
                         ),
@@ -634,12 +634,12 @@ class _AgriTransportHubScreenState extends State<AgriTransportHubScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Confirm Booking'),
+        title: const Text('Confirm Booking'),
         content: Text('Book transport with $driverName using $vehicleType?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -651,8 +651,8 @@ class _AgriTransportHubScreenState extends State<AgriTransportHubScreen>
                 ),
               );
             },
-            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFFF7043)),
-            child: Text('Confirm', style: TextStyle(color: Colors.white)),
+            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFFF7043)),
+            child: const Text('Confirm', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -663,7 +663,7 @@ class _AgriTransportHubScreenState extends State<AgriTransportHubScreen>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Calling $driverName...'),
-        backgroundColor: Color(0xFFFF7043),
+        backgroundColor: const Color(0xFFFF7043),
       ),
     );
   }
@@ -672,7 +672,7 @@ class _AgriTransportHubScreenState extends State<AgriTransportHubScreen>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Opening live tracking for order $orderId...'),
-        backgroundColor: Color(0xFFFF7043),
+        backgroundColor: const Color(0xFFFF7043),
       ),
     );
   }
@@ -681,7 +681,7 @@ class _AgriTransportHubScreenState extends State<AgriTransportHubScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delivery Proof'),
+        title: const Text('Delivery Proof'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -691,16 +691,16 @@ class _AgriTransportHubScreenState extends State<AgriTransportHubScreen>
               color: Colors.grey[300],
               child: Icon(Icons.photo, size: 50, color: Colors.grey[600]),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Text('Order $orderId delivered successfully'),
-            Text('Signed by: John Doe'),
-            Text('Time: Dec 18, 2024 - 3:45 PM'),
+            const Text('Signed by: John Doe'),
+            const Text('Time: Dec 18, 2024 - 3:45 PM'),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Close'),
+            child: const Text('Close'),
           ),
         ],
       ),
@@ -711,7 +711,7 @@ class _AgriTransportHubScreenState extends State<AgriTransportHubScreen>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Opening chat with $partnerName...'),
-        backgroundColor: Color(0xFFFF7043),
+        backgroundColor: const Color(0xFFFF7043),
       ),
     );
   }
@@ -720,7 +720,7 @@ class _AgriTransportHubScreenState extends State<AgriTransportHubScreen>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Viewing $partnerName profile...'),
-        backgroundColor: Color(0xFFFF7043),
+        backgroundColor: const Color(0xFFFF7043),
       ),
     );
   }
@@ -729,25 +729,25 @@ class _AgriTransportHubScreenState extends State<AgriTransportHubScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Become a Transport Partner'),
-        content: Text('Join our network of verified transport providers. Would you like to start the application process?'),
+        title: const Text('Become a Transport Partner'),
+        content: const Text('Join our network of verified transport providers. Would you like to start the application process?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Not Now'),
+            child: const Text('Not Now'),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   content: Text('Opening partner application form...'),
                   backgroundColor: Color(0xFFFF7043),
                 ),
               );
             },
-            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFFF7043)),
-            child: Text('Apply Now', style: TextStyle(color: Colors.white)),
+            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFFF7043)),
+            child: const Text('Apply Now', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

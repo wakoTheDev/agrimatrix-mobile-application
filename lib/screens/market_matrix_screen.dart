@@ -35,7 +35,7 @@ class _MarketMatrixScreenState extends State<MarketMatrixScreen>
   String _selectedCurrency = 'KES';
   String _selectedRegion = 'All';
   String _searchQuery = '';
-  bool _isOnline = true;
+  final bool _isOnline = true;
   
   // Sample market data with timestamps
   final List<Map<String, dynamic>> _marketData = [
@@ -249,7 +249,7 @@ class _MarketMatrixScreenState extends State<MarketMatrixScreen>
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF2B5320).withOpacity(0.15),
+            color: const Color(0xFF2B5320).withValues(alpha: 0.15),
             blurRadius: 4,
             spreadRadius: 0,
             offset: const Offset(-6, 0),
@@ -266,7 +266,7 @@ class _MarketMatrixScreenState extends State<MarketMatrixScreen>
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF2B5320).withOpacity(0.1),
+                    color: const Color(0xFF2B5320).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -534,7 +534,7 @@ class _MarketMatrixScreenState extends State<MarketMatrixScreen>
                     backgroundColor: Colors.blue[600],
                     foregroundColor: Colors.white,
                   ),
-                  child: Text('Calculate Profit'),
+                  child: const Text('Calculate Profit'),
                 ),
               ],
             ),
@@ -916,7 +916,7 @@ class _MarketMatrixScreenState extends State<MarketMatrixScreen>
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             blurRadius: 4,
             spreadRadius: 0,
             offset: const Offset(0, 2),
@@ -1410,9 +1410,9 @@ class _MarketMatrixScreenState extends State<MarketMatrixScreen>
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withOpacity(0.3)),
+          border: Border.all(color: color.withValues(alpha: 0.3)),
         ),
         child: Column(
           children: [

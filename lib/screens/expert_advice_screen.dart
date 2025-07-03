@@ -17,8 +17,6 @@ class ExpertAdviceScreen extends StatefulWidget {
 class _ExpertAdviceScreenState extends State<ExpertAdviceScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isDarkMode = false;
-  String _searchQuery = '';
-  String _selectedFilter = 'All';
 
   @override
   void initState() {
@@ -54,7 +52,7 @@ class _ExpertAdviceScreenState extends State<ExpertAdviceScreen> with SingleTick
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF2B5320).withOpacity(0.15),
+            color: const Color(0xFF2B5320).withValues(alpha: 0.15),
             blurRadius: 4,
             spreadRadius: 0,
             offset: const Offset(-6, 0),
@@ -102,7 +100,7 @@ class _ExpertAdviceScreenState extends State<ExpertAdviceScreen> with SingleTick
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.amber.withOpacity(0.2),
+                          color: Colors.amber.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
@@ -322,7 +320,9 @@ class _ExpertAdviceScreenState extends State<ExpertAdviceScreen> with SingleTick
             Padding(
               padding: const EdgeInsets.all(16),
               child: TextField(
-                onChanged: (value) => setState(() => _searchQuery = value),
+                onChanged: (value) {
+                  // Handle search input
+                },
                 decoration: InputDecoration(
                   hintText: 'Search experts, articles, or ask a question...',
                   prefixIcon: const Icon(Icons.search),
